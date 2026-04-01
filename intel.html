@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLEH INTEL</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@300;400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f7f2e8;
+    --parchment: #ede6d3;
+    --parchment-dark: #e0d8c4;
+    --tan: #c8bba0;
+    --brown: #8b6f47;
+    --dark-brown: #3a2718;
+    --rust: #b94a2c;
+    --ink: #2c1810;
+    --redact: #1a1209;
+    --muted: #7a6a58;
+    --green: #2d5a3d;
+    --amber: #b8860b;
+    --border: #c0b090;
+    --border-light: #d8cdb5;
+    --threat-critical: #9b2a1a;
+    --threat-high: #b94a2c;
+    --threat-elevated: #b8860b;
+    --threat-moderate: #2d5a3d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--parchment);
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 28px,
+      rgba(139,111,71,0.04) 28px, rgba(139,111,71,0.04) 29px
+    );
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    padding: 32px 16px 80px;
+  }
+
+  .page { max-width: 860px; margin: 0 auto; }
+
+  /* ── HEADER ── */
+  .report-header {
+    background: var(--cream);
+    border: 2px solid var(--dark-brown);
+    padding: 36px 32px 28px;
+    text-align: center;
+    margin-bottom: 0;
+    position: relative;
+  }
+  .report-header::before {
+    content: '';
+    position: absolute;
+    inset: 7px;
+    border: 1px solid var(--brown);
+    pointer-events: none;
+  }
+  .org-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .report-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--dark-brown);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .report-title span { color: var(--rust); }
+  .report-subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .header-rule { border: none; border-top: 1px solid var(--border); margin-bottom: 20px; }
+  .report-meta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px 40px;
+  }
+  .meta-item strong {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--brown);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .meta-item span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── CONFID NOTICE ── */
+  .confid-notice {
+    background: var(--dark-brown);
+    color: var(--parchment);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 14px 24px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .confid-notice strong { color: #f0c060; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* ── OVERVIEW ── */
+  .overview-box {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-left: 4px solid var(--rust);
+    padding: 22px 24px;
+    margin-bottom: 32px;
+  }
+  .overview-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--dark-brown);
+    margin-bottom: 10px;
+  }
+  .overview-box p { font-size: 14px; line-height: 1.85; }
+
+  /* ── THREAT GRID ── */
+  .threat-overview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 600px) { .threat-overview { grid-template-columns: 1fr 1fr; } }
+  .threat-card {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .tc-code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 7px;
+    text-transform: uppercase;
+  }
+  .tc-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--dark-brown);
+    margin-bottom: 10px;
+    line-height: 1.3;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .threat-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    text-transform: uppercase;
+  }
+  .badge-critical { background: var(--threat-critical); color: #fff; }
+  .badge-high     { background: var(--threat-high); color: #fff; }
+  .badge-elevated { background: var(--threat-elevated); color: #fff; }
+  .badge-moderate { background: var(--threat-moderate); color: #fff; }
+
+  /* ── CLUSTER ── */
+  .intel-cluster { margin-bottom: 52px; }
+  .cluster-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--dark-brown);
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .cluster-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--rust);
+    letter-spacing: 2px;
+    padding-top: 6px;
+    white-space: nowrap;
+  }
+  .cluster-title-block { flex: 1; min-width: 200px; }
+  .cluster-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--dark-brown);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .cluster-codename {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── FINDINGS ── */
+  .findings-list { list-style: none; margin-bottom: 20px; }
+  .findings-list li {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 13.5px;
+    line-height: 1.8;
+    align-items: flex-start;
+  }
+  .findings-list li:last-child { border-bottom: none; }
+  .finding-bullet {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    color: var(--rust);
+    padding-top: 6px;
+    white-space: nowrap;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ── REDACTED ── */
+  .redacted {
+    display: inline-block;
+    background: var(--redact);
+    color: var(--redact);
+    border-radius: 1px;
+    padding: 1px 6px;
+    user-select: none;
+    cursor: not-allowed;
+    min-width: 70px;
+    font-size: 0.85em;
+  }
+  .redacted::after { content: '██████'; color: var(--redact); font-family: monospace; }
+
+  /* ── INTEL GRID ── */
+  .intel-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+  }
+  @media (max-width: 600px) { .intel-grid { grid-template-columns: 1fr; } }
+  .intel-cell {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    padding: 16px;
+  }
+  .ic-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .confidence-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--dark-brown);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .confidence-bar-wrap {
+    height: 5px;
+    background: var(--parchment-dark);
+    border-radius: 1px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .confidence-bar { height: 100%; background: var(--rust); border-radius: 1px; }
+  .confidence-note { font-size: 11px; color: var(--muted); font-style: italic; line-height: 1.5; }
+  .source-rating { display: flex; gap: 4px; margin-bottom: 7px; }
+  .source-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--parchment-dark); border: 1.5px solid var(--border);
+    flex-shrink: 0;
+  }
+  .source-dot.filled { background: var(--rust); border-color: var(--rust); }
+  .source-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 700; color: var(--dark-brown); margin-bottom: 4px;
+  }
+  .source-note { font-size: 11px; color: var(--muted); font-style: italic; line-height: 1.5; }
+  .motive-list { list-style: none; font-size: 12px; line-height: 1.8; color: var(--ink); }
+  .motive-list li::before { content: '→ '; color: var(--rust); font-family: 'IBM Plex Mono', monospace; }
+
+  /* ── QUOTE ── */
+  .intel-quote {
+    border-left: 3px solid var(--rust);
+    padding: 12px 18px;
+    margin: 14px 0;
+    background: rgba(185,74,44,0.04);
+  }
+  .intel-quote p { font-style: italic; font-size: 13.5px; color: var(--ink); line-height: 1.75; }
+  .intel-quote cite {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  /* ── ANALYST NOTE ── */
+  .analyst-note {
+    background: #fffbf0;
+    border: 1px dashed var(--amber);
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--dark-brown);
+    line-height: 1.75;
+  }
+  .analyst-note strong {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  /* ── POI ── */
+  .poi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .poi-card {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    padding: 14px 14px 12px;
+    position: relative;
+  }
+  .poi-card::before {
+    content: 'POI';
+    position: absolute; top: 10px; right: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7px; letter-spacing: 2px;
+    color: var(--tan); font-weight: 700;
+  }
+  .poi-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--dark-brown); margin-bottom: 6px;
+  }
+  .poi-role { font-size: 11px; color: var(--muted); font-style: italic; margin-bottom: 10px; line-height: 1.5; }
+  .poi-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px; letter-spacing: 1px;
+    color: var(--rust); text-transform: uppercase; font-weight: 700;
+  }
+
+  /* ── WHAT NOW ── */
+  .what-now {
+    background: var(--dark-brown);
+    color: var(--parchment);
+    padding: 22px 24px;
+    margin-top: 20px;
+  }
+  .wn-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8px; letter-spacing: 4px;
+    color: #f0c060; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .what-now ol { list-style: none; counter-reset: wn; }
+  .what-now ol li {
+    counter-increment: wn;
+    display: flex; gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 13px; line-height: 1.7;
+    align-items: flex-start;
+  }
+  .what-now ol li:last-child { border-bottom: none; }
+  .what-now ol li::before {
+    content: counter(wn, decimal-leading-zero);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; color: #f0c060;
+    font-weight: 700; padding-top: 3px; white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* ── PROTOCOLS BOX ── */
+  .protocol-box {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-top: 4px solid var(--dark-brown);
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  .protocol-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--dark-brown); margin-bottom: 16px;
+  }
+  .protocol-item {
+    display: flex; gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+    align-items: flex-start;
+  }
+  .protocol-item:last-child { border-bottom: none; }
+  .proto-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; font-weight: 700;
+    color: var(--rust); white-space: nowrap;
+    padding-top: 2px; flex-shrink: 0;
+  }
+  .proto-text { font-size: 13.5px; line-height: 1.75; }
+  .proto-text strong { color: var(--dark-brown); }
+
+  /* ── FLOWCHART ── */
+  .flowchart-wrap {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    padding: 24px 20px;
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+  .flowchart-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 4px;
+    color: var(--muted); text-transform: uppercase;
+    text-align: center; margin-bottom: 24px;
+  }
+
+  /* SVG flowchart */
+  .flow-svg { width: 100%; max-width: 640px; display: block; margin: 0 auto; }
+
+  /* ── EXEC SUMMARY ── */
+  .exec-summary {
+    background: var(--cream);
+    border: 2px solid var(--dark-brown);
+    padding: 32px 28px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .exec-summary::before {
+    content: '';
+    position: absolute; inset: 6px;
+    border: 1px solid var(--border);
+    pointer-events: none;
+  }
+  .exec-summary-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 4px;
+    color: var(--rust); text-transform: uppercase; margin-bottom: 14px;
+  }
+  .exec-summary h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--dark-brown); margin-bottom: 16px;
+  }
+  .exec-summary p { font-size: 13.5px; line-height: 1.9; margin-bottom: 12px; }
+  .exec-summary p:last-child { margin-bottom: 0; }
+  .exec-summary .sig {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    border-top: 2px solid var(--dark-brown);
+    padding-top: 22px;
+    text-align: center;
+  }
+  .footer-motto {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-style: italic;
+    color: var(--dark-brown); margin-bottom: 12px;
+  }
+  .footer-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 2px;
+    color: var(--muted); line-height: 2;
+    text-transform: uppercase;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--border-light); margin: 28px 0; }
+
+  @media (max-width: 480px) {
+    .report-title { font-size: 36px; }
+    .cluster-title { font-size: 22px; }
+    body { padding: 20px 12px 60px; }
+    .report-header { padding: 28px 20px 22px; }
+    .confid-notice { padding: 12px 16px; font-size: 10.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="report-header">
+    <div class="org-label">Lelaki Soleh Intelligence Directorate &nbsp;·&nbsp; Untuk Tatapan Ahli Sahaja</div>
+    <div class="report-title">SOLEH <span>INTEL</span></div>
+    <div class="report-subtitle">Intelligence Analysis Report &nbsp;·&nbsp; Q1 Assessment</div>
+    <hr class="header-rule">
+    <div class="report-meta">
+      <div class="meta-item"><strong>Tarikh</strong><span>April 2025</span></div>
+      <div class="meta-item"><strong>Penganalisis</strong><span>Sekretariat Soleh</span></div>
+      <div class="meta-item"><strong>Taraf</strong><span>Sulit — Ahli Sahaja</span></div>
+      <div class="meta-item"><strong>Kluster Aktif</strong><span>4 Kes Terbuka</span></div>
+    </div>
+  </div>
+
+  <!-- CONFID NOTICE -->
+  <div class="confid-notice">
+    <strong>NOTIS KERAHSIAAN:</strong> Laporan ini mengandungi intelligence yang dikumpul melalui pelbagai saluran dalaman. Pengedaran kepada mana-mana pihak luar kumpulan adalah dilarang. Ahli diingatkan untuk mematuhi Protokol Komunikasi Lelaki Soleh pada setiap masa.
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section-label">▸ Gambaran Keseluruhan</div>
+  <div class="overview-box">
+    <h2>Executive Summary</h2>
+    <p>
+      Penilaian terkini menunjukkan bahawa organisasi sedang menghadapi tekanan pelbagai arah secara serentak. Terdapat petanda kukuh bahawa ketidakstabilan yang dirasai di peringkat pasukan bukan semata-mata kesan daripada keputusan korporat, tetapi mungkin merupakan hasil daripada agenda peribadi yang dipakaikan jubah strategi. Lelaki Soleh dinasihatkan untuk kekal berwaspada, mengamalkan protokol komunikasi yang ketat, dan melindungi pihak-pihak yang tidak bersalah yang mungkin terjejas.
+    </p>
+  </div>
+
+  <!-- THREAT SUMMARY -->
+  <div class="section-label">▸ Ringkasan Tahap Ancaman</div>
+  <div class="threat-overview">
+    <div class="threat-card">
+      <div class="tc-code">OP-001</div>
+      <div class="tc-label">BOCOR</div>
+      <span class="threat-badge badge-critical">Critical</span>
+    </div>
+    <div class="threat-card">
+      <div class="tc-code">OP-002</div>
+      <div class="tc-label">Trouble In Paradise</div>
+      <span class="threat-badge badge-high">High</span>
+    </div>
+    <div class="threat-card">
+      <div class="tc-code">OP-003</div>
+      <div class="tc-label">International Affairs</div>
+      <span class="threat-badge badge-elevated">Elevated</span>
+    </div>
+    <div class="threat-card">
+      <div class="tc-code">OP-004</div>
+      <div class="tc-label">Love Actually (Tak)</div>
+      <span class="threat-badge badge-moderate">Moderate</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ OP-001 ═══════════════════════ -->
+  <div class="intel-cluster">
+    <div class="cluster-header">
+      <div class="cluster-number">OP — 001</div>
+      <div class="cluster-title-block">
+        <div class="cluster-title">BOCOR</div>
+        <div class="cluster-codename">Codename: The Leaky Cauldron &nbsp;·&nbsp; Counter-Intelligence Assessment</div>
+      </div>
+      <span class="threat-badge badge-critical">🔴 Critical</span>
+    </div>
+
+    <div class="section-label">▸ Temuan Utama</div>
+    <ul class="findings-list">
+      <li><span class="finding-bullet">F-01</span><span>Terdapat pengetahuan yang tidak sepatutnya ada mengenai situasi dan status semasa <span class="redacted">Subjek</span>. Maklumat ini telah sampai kepada pihak yang tidak seharusnya menerimanya, dan ini dinilai sebagai kebocoran yang berlaku melalui saluran tidak rasmi.</span></li>
+      <li><span class="finding-bullet">F-02</span><span>Selepas analisis pelbagai sumber, side-talk, dan sesi tidak formal, Sekretariat menyimpulkan bahawa terdapat individu — sama ada dari kalangan Lelaki Soleh atau yang hadir dalam mesyuarat COD — yang telah menyampaikan maklumat sensitif, secara sedar atau tidak sedar.</span></li>
+      <li><span class="finding-bullet">F-03</span><span>Siasatan menjurus kepada tiga profil: <strong>Z</strong>, <strong>A</strong>, dan <span class="redacted">Pihak Ketiga</span>. Perkembangan terbaru pada 1 April telah memperluaskan skop siasatan. Semua tiga kemungkinan konsisten dengan corak perkongsian maklumat tanpa kesedaran penuh.</span></li>
+      <li><span class="finding-bullet">F-04</span><span>Pada <strong>26 Mac</strong>, operatif Z telah dikesan mengadakan pertemuan tidak rasmi dengan pihak berkenaan di kawasan tepi kolam. Saksi bebas R hadir. Apabila disoal siasat oleh Council, Z menyatakan topik perbincangan hanya melibatkan penilaian negatif terhadap <span class="redacted">Subjek</span>.</span></li>
+      <li><span class="finding-bullet">F-05</span><span>Semasa soal siasat, Z mengeluarkan cadangan strategik berikut:</span></li>
+    </ul>
+
+    <div class="intel-quote">
+      <p>"Dua boleh main game ni. Sebelum kita kehabisan kad, kita perlu counter-espionage supaya boleh level the playing field."</p>
+      <cite>— Operatif Z &nbsp;·&nbsp; Rekod Soal Siasat &nbsp;·&nbsp; Tarikh: [Redacted]</cite>
+    </div>
+
+    <div class="analyst-note">
+      <strong>Nota Penganalisis</strong>
+      Cadangan Z mengenai counter-espionage membuka satu dimensi baru dalam pendekatan kumpulan. Ini adalah petanda kematangan strategik yang perlu dikaji dengan teliti oleh Council. Matlamat sebenar bukan semata-mata untuk bertahan, tetapi untuk memahami apakah agenda sebenar di sebalik pergerakan yang sedang berlaku — adakah ini strategi korporat yang tulen, atau sekadar emosi peribadi yang dibalut dengan terminologi profesional?
+    </div>
+
+    <div class="intel-grid">
+      <div class="intel-cell">
+        <div class="ic-label">Confidence Level</div>
+        <div class="confidence-value">71%</div>
+        <div class="confidence-bar-wrap"><div class="confidence-bar" style="width:71%"></div></div>
+        <div class="confidence-note">Tinggi. Saksi R mengesahkan incident tepi kolam secara bebas.</div>
+      </div>
+      <div class="intel-cell">
+        <div class="ic-label">Source Reliability</div>
+        <div class="source-rating">
+          <div class="source-dot filled"></div><div class="source-dot filled"></div>
+          <div class="source-dot filled"></div><div class="source-dot filled"></div>
+          <div class="source-dot"></div>
+        </div>
+        <div class="source-label">4 / 5 — Boleh Dipercayai</div>
+        <div class="source-note">Pelbagai sumber bebas mengesahkan perkara asas.</div>
+      </div>
+      <div class="intel-cell">
+        <div class="ic-label">Motif Berkemungkinan</div>
+        <ul class="motive-list">
+          <li>Perkongsian tanpa sedar</li>
+          <li>Terpengaruh dengan framing pihak lain</li>
+          <li>Tersalah anggap kepentingan info</li>
+          <li>Strategi counter tersendiri</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-label">▸ Persons of Interest</div>
+    <div class="poi-grid">
+      <div class="poi-card">
+        <div class="poi-name">Operatif Z</div>
+        <div class="poi-role">Meeting tepi kolam. Mencadangkan counter-espionage. Sedang dipantau.</div>
+        <div class="poi-tag">⚠ Suspek Utama</div>
+      </div>
+      <div class="poi-card">
+        <div class="poi-name">Operatif A</div>
+        <div class="poi-role">Hadir dalam sesi berkenaan. Mempunyai akses kepada maklumat sensitif.</div>
+        <div class="poi-tag">⚠ Suspek Sekunder</div>
+      </div>
+      <div class="poi-card">
+        <div class="poi-name"><span class="redacted">Pihak Ketiga</span></div>
+        <div class="poi-role">Identiti diklasifikasikan. Kemunculan pada 1 April menambah dimensi baru.</div>
+        <div class="poi-tag">🔴 Under Review</div>
+      </div>
+      <div class="poi-card">
+        <div class="poi-name">Saksi R</div>
+        <div class="poi-role">Menyaksikan incident tepi kolam. Bukan suspek. Perlu formal debrief.</div>
+        <div class="poi-tag">ℹ Witness</div>
+      </div>
+    </div>
+
+    <div class="what-now">
+      <div class="wn-label">▸ Tindakan Disyorkan</div>
+      <ol>
+        <li>Mulakan operasi counter-intelligence dalaman. Z sendiri mencadangkannya — momentum ini tidak perlu dibazirkan.</li>
+        <li>Lakukan penilaian semula siapa yang hadir dalam setiap sesi COD dan maklumat apa yang keluar selepasnya.</li>
+        <li>R perlu di-debrief secara terkawal untuk mendapatkan gambaran penuh incident tepi kolam.</li>
+        <li>Susun semula boundary perkongsian maklumat dalam kalangan ahli, merujuk kepada Protokol Komunikasi di bawah.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ OP-002 ═══════════════════════ -->
+  <div class="intel-cluster">
+    <div class="cluster-header">
+      <div class="cluster-number">OP — 002</div>
+      <div class="cluster-title-block">
+        <div class="cluster-title">Trouble In Paradise</div>
+        <div class="cluster-codename">Codename: Kabut Pejabat &nbsp;·&nbsp; Organisational Stability Assessment</div>
+      </div>
+      <span class="threat-badge badge-high">🟠 High</span>
+    </div>
+
+    <div class="section-label">▸ Temuan Utama</div>
+    <ul class="findings-list">
+      <li><span class="finding-bullet">F-01</span><span>Terdapat peredaran khabar angin yang meluas berkaitan penstrukturan semula, perletakan jawatan, dan penempatan semula pasukan. Kesemua ini secara langsung menjejas motivasi dan semangat kerja di pelbagai peringkat organisasi.</span></li>
+      <li><span class="finding-bullet">F-02</span><span>Operatif R menzahirkan keresahan secara langsung. Kenyataan verbatim direkodkan untuk rujukan:</span></li>
+    </ul>
+
+    <div class="intel-quote">
+      <p>"Aku dah 3 kali tak semangat masuk office. Sebab benda-benda macam ni la. Kambing betul."</p>
+      <cite>— Operatif R &nbsp;·&nbsp; Perbualan Spontan &nbsp;·&nbsp; Sumber: Langsung</cite>
+    </div>
+
+    <ul class="findings-list">
+      <li><span class="finding-bullet">F-03</span><span>Corak ini selaras dengan peningkatan frekuensi mesyuarat peringkat TOP dan C-level dalam tempoh beberapa minggu kebelakangan ini. Operatif R dan A berkemungkinan mempunyai gambaran yang lebih lengkap, namun sebagai pelaksana di lapangan, akses mereka kepada perbincangan peringkat atas adalah terhad.</span></li>
+      <li><span class="finding-bullet">F-04</span><span>Seminggu sebelum laporan ini dikompilasi, anggota <span class="redacted">Unit Berkenaan</span> telah dikesan menubuhkan ruang pejabat baru di <span class="redacted">Lokasi Baru</span>. Apabila disoal oleh pihak lain, semua individu berkenaan mengelak daripada memberi sebarang kenyataan. Pengelakan itu sendiri adalah sebuah jawapan.</span></li>
+      <li><span class="finding-bullet">F-05</span><span>Berdasarkan pemerhatian langsung dan rakaman CCTV, sejumlah besar kakitangan telah dikesan mengemaskini resume masing-masing semasa Karnival MyFutureJobs PERKESO. Ini adalah petunjuk semangat kerja yang paling nyata dan konkrit setakat ini.</span></li>
+    </ul>
+
+    <div class="analyst-note">
+      <strong>Nota Penganalisis</strong>
+      Apabila kakitangan beramai-ramai mengemaskini resume semasa waktu pejabat, ini bukan sekadar isu motivasi — ia adalah tanda awal exodus. Persoalan yang lebih besar: adakah ketidakstabilan ini adalah keputusan strategik yang terancang, atau ia adalah kesan sampingan daripada agenda peribadi yang dibalut sebagai "corporate restructuring"? Lelaki Soleh perlu menilai sama ada mereka, atau mereka yang dekat dengan kumpulan ini, mungkin terjejas secara langsung.
+    </div>
+
+    <div class="intel-grid">
+      <div class="intel-cell">
+        <div class="ic-label">Confidence Level</div>
+        <div class="confidence-value">83%</div>
+        <div class="confidence-bar-wrap"><div class="confidence-bar" style="width:83%"></div></div>
+        <div class="confidence-note">Disahkan melalui pelbagai saluran bebas termasuk pemerhatian CCTV.</div>
+      </div>
+      <div class="intel-cell">
+        <div class="ic-label">Source Reliability</div>
+        <div class="source-rating">
+          <div class="source-dot filled"></div><div class="source-dot filled"></div>
+          <div class="source-dot filled"></div><div class="source-dot filled"></div>
+          <div class="source-dot filled"></div>
+        </div>
+        <div class="source-label">5 / 5 — Disahkan Pelbagai Sumber</div>
+        <div class="source-note">CCTV + kenyataan langsung + pemerhatian saksi.</div>
+      </div>
+      <div class="intel-cell">
+        <div class="ic-label">Motif Berkemungkinan</div>
+        <ul class="motive-list">
+          <li>Penstrukturan semula dirancang</li>
+          <li>Pejabat baru sebagai langkah senyap</li>
+          <li>Morale rendah → exit planning</li>
+          <li>Agenda peribadi berbungkus strategi</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="what-now">
+      <div class="wn-label">▸ Tindakan Disyorkan</div>
+      <ol>
+        <li>Pantau perkembangan <span class="redacted">Unit Berkenaan</span> di lokasi baru — sama ada ini satu projek berasingan atau sebahagian daripada rancangan yang lebih besar.</li>
+        <li>R dan A perlu di-engage secara tidak formal untuk memperoleh gambaran sebenar dari perspektif peringkat pelaksana.</li>
+        <li>Lelaki Soleh perlu melakukan penilaian dalaman: siapa antara kita yang mungkin terjejas secara langsung atau tidak langsung sekiranya penstrukturan semula berlaku.</li>
+        <li>Lindungi pihak-pihak yang tidak terlibat dalam permainan ini tetapi mungkin menjadi mangsa kepada akibatnya.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ OP-003 ═══════════════════════ -->
+  <div class="intel-cluster">
+    <div class="cluster-header">
+      <div class="cluster-number">OP — 003</div>
+      <div class="cluster-title-block">
+        <div class="cluster-title">International Affairs</div>
+        <div class="cluster-codename">Codename: Jangan Kacau Diorang &nbsp;·&nbsp; Geopolitical Risk Assessment</div>
+      </div>
+      <span class="threat-badge badge-elevated">🟡 Elevated</span>
+    </div>
+
+    <div class="section-label">▸ Temuan Utama</div>
+    <ul class="findings-list">
+      <li><span class="finding-bullet">F-01</span><span>Presiden <span class="redacted">Entiti X</span> telah dikesan berulang kali mengadakan pertemuan dengan CEO di pejabat. Berdasarkan akaun beberapa saksi, topik perbincangan yang dikenal pasti merangkumi: pematuhan antarabangsa, struktur audit OHXEM, latihan pasukan baru, dan kemungkinan pengembangan melalui BDE atau Franchise.</span></li>
+      <li><span class="finding-bullet">F-02</span><span>Presiden tersebut dilaporkan secara konsisten menolak cadangan yang dibentangkan, atas alasan kepimpinan semasa di <span class="redacted">Entiti X</span>. Kenyataan beliau direkodkan:</span></li>
+    </ul>
+
+    <div class="intel-quote">
+      <p>"Taknak. Memang fucked up skang ni. Kalau aku tolak nanti diorang tanya, 'Kenapa kau taknak? Kau tak suka <span class="redacted">entiti ini</span> ke?'"</p>
+      <cite>— Presiden [Redacted] &nbsp;·&nbsp; Perbualan Tidak Rasmi &nbsp;·&nbsp; Sumber: Bystander</cite>
+    </div>
+
+    <ul class="findings-list">
+      <li><span class="finding-bullet">F-03</span><span>Ini bukan sekadar khabar angin — pasukan International sedang dalam fasa pujukan aktif terhadap <span class="redacted">Klien Utama</span> yang berada di ambang untuk menarik diri sepenuhnya.</span></li>
+      <li><span class="finding-bullet">F-04</span><span>Klien menyatakan HQ lambat bertindak balas. Pasukan International membalas bahawa klien yang tidak mengikut arahan yang diberikan. Kedua-dua pihak mungkin tidak salah sepenuhnya. Ini adalah situasi blame loop yang klasik dan tidak produktif.</span></li>
+      <li><span class="finding-bullet">F-05</span><span>Pasukan IT telah membangunkan sistem RSVP untuk event <span class="redacted">Klien Utama</span>. Maklum balas yang diterima daripada klien adalah seperti berikut:</span></li>
+    </ul>
+
+    <div class="intel-quote">
+      <p>"Amat sulit sistem ini. Saya buat secara manual aja."</p>
+      <cite>— <span class="redacted">Klien Utama</span> &nbsp;·&nbsp; Maklum Balas Rasmi &nbsp;·&nbsp; Status: Tiada Respons Daripada IT Lagi</cite>
+    </div>
+
+    <div class="analyst-note">
+      <strong>Nota Penganalisis</strong>
+      Penolakan sistem digital atas alasan "sulit" sambil memilih kaedah manual adalah sesuatu yang memerlukan tahap kesabaran yang tinggi daripada semua pihak terlibat. Pasukan IT dinasihatkan untuk mendokumentasikan semua interaksi dan output kerja sebagai rekod profesional. Ini bukan soal benar atau salah — ini soal perlindungan diri.
+    </div>
+
+    <div class="intel-grid">
+      <div class="intel-cell">
+        <div class="ic-label">Confidence Level</div>
+        <div class="confidence-value">78%</div>
+        <div class="confidence-bar-wrap"><div class="confidence-bar" style="width:78%"></div></div>
+        <div class="confidence-note">Kukuh. Disokong oleh pelbagai sumber berbeza.</div>
+      </div>
+      <div class="intel-cell">
+        <div class="ic-label">Source Reliability</div>
+        <div class="source-rating">
+          <div class="source-dot filled"></div><div class="source-dot filled"></div>
+          <div class="source-dot filled"></div><div class="source-dot filled"></div>
+          <div class="source-dot"></div>
+        </div>
+        <div class="source-label">4 / 5 — Dipercayai</div>
+        <div class="source-note">Akaun bystander + kenyataan Presiden sendiri + maklum balas bertulis.</div>
+      </div>
+      <div class="intel-cell">
+        <div class="ic-label">Motif Berkemungkinan</div>
+        <ul class="motive-list">
+          <li>Tekanan dari CEO & Director</li>
+          <li>Klien sukar diurus</li>
+          <li>Komunikasi tidak selaras</li>
+          <li>Tekanan politik dari peringkat atas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="what-now">
+      <div class="wn-label">▸ Tindakan Disyorkan</div>
+      <ol>
+        <li>Presiden <span class="redacted">Entiti X</span> berada dalam keadaan tertekan dari atas. Lelaki Soleh perlu memantau situasi ini dan bersedia sekiranya ada implikasi kepada kumpulan.</li>
+        <li>Pasukan IT perlu mendokumentasikan semua hasil kerja dan interaksi dengan klien sebagai rekod pertahanan profesional.</li>
+        <li>Pantau sama ada pengembangan antarabangsa ini akan memberi kesan secara langsung atau tidak langsung kepada struktur dalaman kita.</li>
+        <li>Elakkan membuat kenyataan mengenai situasi RSVP kepada mana-mana pihak luar sehingga terdapat perkembangan rasmi.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ OP-004 ═══════════════════════ -->
+  <div class="intel-cluster">
+    <div class="cluster-header">
+      <div class="cluster-number">OP — 004</div>
+      <div class="cluster-title-block">
+        <div class="cluster-title">Love Actually (Tak)</div>
+        <div class="cluster-codename">Codename: Complicated &nbsp;·&nbsp; Interpersonal Risk Assessment</div>
+      </div>
+      <span class="threat-badge badge-moderate">🟢 Moderate</span>
+    </div>
+
+    <div class="section-label">▸ Temuan Utama</div>
+    <ul class="findings-list">
+      <li><span class="finding-bullet">F-01</span><span>Mr <span class="redacted">L</span> telah dikesan secara terbuka menzahirkan perasaan terhadap <strong>Person A</strong> melalui media sosialnya. Aktiviti ini bermula sejak Hari Raya pada bulan Mac, dan bersifat berterusan, menunjukkan ini bukan sekadar tindakan impulsif.</span></li>
+      <li><span class="finding-bullet">F-02</span><span>Walau bagaimanapun, terdapat satu khabar angin yang selama ini tidak diperkatakan secara terbuka — bahawa Mr <span class="redacted">L</span> dan <strong>Person B</strong> telah mempunyai sesuatu yang tidak rasmi di antara mereka sepanjang tempoh yang sama. Tiada pengakuan atau penafian rasmi dari mana-mana pihak.</span></li>
+      <li><span class="finding-bullet">F-03</span><span>Dalam perbualan kasual dengan operatif Z, Mr <span class="redacted">L</span> membuat pengakuan berikut:</span></li>
+    </ul>
+
+    <div class="intel-quote">
+      <p>"Dah 3 tahun dah... but we keep it professional."</p>
+      <cite>— Mr <span class="redacted">L</span> &nbsp;·&nbsp; Perbualan Kasual dengan Operatif Z &nbsp;·&nbsp; Sumber: Z</cite>
+    </div>
+
+    <ul class="findings-list">
+      <li><span class="finding-bullet">F-04</span><span>Pengakuan ini menimbulkan persoalan yang tidak dapat dielakkan: jika hubungan dengan Person A telah berlangsung selama 3 tahun, apakah status sebenar hubungan dengan Person B selama ini? Council menyatakan kebimbangan terhadap kesejahteraan Person B.</span></li>
+      <li><span class="finding-bullet">F-05</span><span>Operatif W merumuskan kebimbangan Council dengan soalan yang dinilai sebagai ringkas tetapi tepat:</span></li>
+    </ul>
+
+    <div class="intel-quote">
+      <p>"Habistu memang kau game dia je la selama ni?"</p>
+      <cite>— Operatif W &nbsp;·&nbsp; Tindak Balas Spontan &nbsp;·&nbsp; Penilaian: Soalan Paling Tepat Dalam Sesi Ini</cite>
+    </div>
+
+    <div class="analyst-note">
+      <strong>Nota Penganalisis</strong>
+      "We keep it professional" selepas 3 tahun adalah frasa yang memerlukan lebih banyak konteks daripada yang diberikan. Council tidak berada dalam kedudukan untuk membuat penghakiman, namun mempunyai tanggungjawab moral untuk memastikan kesejahteraan semua pihak yang mungkin terjejas — terutamanya mereka yang tidak tahu apa yang sedang berlaku.
+    </div>
+
+    <div class="intel-grid">
+      <div class="intel-cell">
+        <div class="ic-label">Confidence Level</div>
+        <div class="confidence-value">91%</div>
+        <div class="confidence-bar-wrap"><div class="confidence-bar" style="width:91%"></div></div>
+        <div class="confidence-note">Primary source. Mr L sendiri yang menyatakan kepada Z secara langsung.</div>
+      </div>
+      <div class="intel-cell">
+        <div class="ic-label">Source Reliability</div>
+        <div class="source-rating">
+          <div class="source-dot filled"></div><div class="source-dot filled"></div>
+          <div class="source-dot filled"></div><div class="source-dot filled"></div>
+          <div class="source-dot filled"></div>
+        </div>
+        <div class="source-label">5 / 5 — Primer Langsung</div>
+        <div class="source-note">Pengakuan terus daripada subjek. Media sosial boleh diakses secara terbuka.</div>
+      </div>
+      <div class="intel-cell">
+        <div class="ic-label">Motif Berkemungkinan</div>
+        <ul class="motive-list">
+          <li>Perasaan genuine terhadap Person A</li>
+          <li>Situasi Person B tidak diselesaikan</li>
+          <li>Definisi "professional" tidak jelas</li>
+          <li>Lebih kompleks dari yang kelihatan</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-label">▸ Persons of Interest</div>
+    <div class="poi-grid">
+      <div class="poi-card">
+        <div class="poi-name">Mr <span class="redacted">L</span></div>
+        <div class="poi-role">Mengaku 3 tahun dengan Person A. Situasi dengan Person B tidak dijelaskan.</div>
+        <div class="poi-tag">🔍 Subjek Utama</div>
+      </div>
+      <div class="poi-card">
+        <div class="poi-name">Person A</div>
+        <div class="poi-role">Dipamerkan secara terbuka di media sosial. Status hubungan: diakui.</div>
+        <div class="poi-tag">ℹ Dalam Gambar</div>
+      </div>
+      <div class="poi-card">
+        <div class="poi-name">Person B</div>
+        <div class="poi-role">Khabar angin tidak rasmi. Status semasa tidak diketahui. Perlu pemantauan.</div>
+        <div class="poi-tag">💛 Perlu Dilindungi</div>
+      </div>
+      <div class="poi-card">
+        <div class="poi-name">Operatif W</div>
+        <div class="poi-role">Penyoal terbaik dalam sesi ini. Merumuskan situasi dengan satu soalan sahaja.</div>
+        <div class="poi-tag">✅ Paling Lucid</div>
+      </div>
+    </div>
+
+    <div class="what-now">
+      <div class="wn-label">▸ Tindakan Disyorkan</div>
+      <ol>
+        <li>Council perlu check in dengan Person B secara manusiawi dan tidak mencolok — bukan sebagai siasatan, tetapi sebagai rakan.</li>
+        <li>Soalan Operatif W perlu dijawab oleh Mr L pada masa yang sesuai. Seseorang perlu tampil untuk bertanya secara langsung.</li>
+        <li>Pantau media sosial untuk perkembangan lanjut. Ini adalah OSINT paling mudah dalam keseluruhan laporan ini.</li>
+        <li>Council hadir sebagai sokongan moral, bukan sebagai tribunal. Pendekatan perlu lembut dan berhati-hati.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ PROTOCOLS ═══════════════════════ -->
+  <div class="section-label">▸ Protokol Komunikasi Lelaki Soleh</div>
+  <div class="protocol-box">
+    <h3>Panduan Komunikasi Dalaman — Berkuat Kuasa Serta-Merta</h3>
+
+    <div class="protocol-item">
+      <div class="proto-num">P-01</div>
+      <div class="proto-text"><strong>Sebelum bercakap, tanya: "Perlu ke aku cakap ni?"</strong> — Bukan semua maklumat perlu dikongsi. Nilai dahulu sama ada perkongsian itu memberi manfaat kepada kumpulan atau sebaliknya membuka ruang kepada risiko.</div>
+    </div>
+    <div class="protocol-item">
+      <div class="proto-num">P-02</div>
+      <div class="proto-text"><strong>Kenali siapa yang ada di hadapan kamu.</strong> — Sebelum berkongsi apa-apa, pastikan kamu tahu dengan siapa kamu bercakap dan apakah hubungan mereka dengan maklumat tersebut. Jangan andaikan semua orang adalah selamat.</div>
+    </div>
+    <div class="protocol-item">
+      <div class="proto-num">P-03</div>
+      <div class="proto-text"><strong>Nilai niat di sebalik soalan yang dikemukakan kepada kamu.</strong> — Adakah soalan ini datang daripada keprihatinan yang tulen, atau adakah individu ini sedang mengumpul maklumat? Good intention ≠ good reception — dan soalan yang nampak innocent kadangkala membawa agenda yang tidak kelihatan.</div>
+    </div>
+    <div class="protocol-item">
+      <div class="proto-num">P-04</div>
+      <div class="proto-text"><strong>Adakah maklumat ini patut diketahui oleh Lelaki Soleh?</strong> — Bukan semua berita buruk perlu dikongsi segera. Nilai sama ada perkongsian itu membantu kumpulan bersedia, atau hanya menambah kebimbangan tanpa nilai tindakan.</div>
+    </div>
+    <div class="protocol-item">
+      <div class="proto-num">P-05</div>
+      <div class="proto-text"><strong>Adakah maklumat ini akan sampai ke pihak yang salah?</strong> — Fikirkan rantaian perkongsian. Maklumat yang dikongsi kepada satu orang tidak semestinya berhenti di situ. Tanya diri sendiri: kalau ini bocor, siapa yang akan terjejas?</div>
+    </div>
+    <div class="protocol-item">
+      <div class="proto-num">P-06</div>
+      <div class="proto-text"><strong>Soalan Ketiga yang Wajib:</strong> — Selain dua soalan asal dari Townhall 2.0, tambah satu lagi: <em>"Bolehkah maklumat ini digunakan oleh pihak lain untuk memetakan pergerakan, rancangan, atau kelemahan kumpulan kita?"</em> Sekiranya jawapannya ya atau mungkin, tahan dahulu.</div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div class="flowchart-wrap">
+        <div class="flowchart-title">▸ Carta Alir — Protokol Pra-Perkongsian</div>
+        <svg class="flow-svg" viewBox="0 0 580 420" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace">
+          <!-- Styles -->
+          <defs>
+            <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#8b6f47"/>
+            </marker>
+          </defs>
+
+          <!-- Box 1: Start -->
+          <rect x="190" y="10" width="200" height="40" fill="#f7f2e8" stroke="#3a2718" stroke-width="1.5"/>
+          <text x="290" y="35" text-anchor="middle" font-size="11" fill="#2c1810">Aku nak share sesuatu...</text>
+
+          <!-- Arrow down -->
+          <line x1="290" y1="50" x2="290" y2="75" stroke="#8b6f47" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <!-- Diamond: Perlu ke? -->
+          <polygon points="290,80 390,110 290,140 190,110" fill="#fff8ee" stroke="#b94a2c" stroke-width="1.5"/>
+          <text x="290" y="107" text-anchor="middle" font-size="10" fill="#b94a2c" font-weight="700">Perlu ke bagitahu?</text>
+
+          <!-- Left arrow: TIDAK -->
+          <line x1="190" y1="110" x2="90" y2="110" stroke="#8b6f47" stroke-width="1.5" marker-end="url(#arr)"/>
+          <text x="140" y="104" text-anchor="middle" font-size="9" fill="#7a6a58">TIDAK</text>
+          <rect x="20" y="90" width="70" height="40" fill="#3a2718" stroke="#3a2718"/>
+          <text x="55" y="112" text-anchor="middle" font-size="10" fill="#ede6d3">Simpan.</text>
+          <text x="55" y="126" text-anchor="middle" font-size="10" fill="#ede6d3">Diam.</text>
+
+          <!-- Down arrow: YA -->
+          <line x1="290" y1="140" x2="290" y2="165" stroke="#8b6f47" stroke-width="1.5" marker-end="url(#arr)"/>
+          <text x="302" y="157" font-size="9" fill="#7a6a58">YA</text>
+
+          <!-- Diamond: Siapa dengar? -->
+          <polygon points="290,170 400,200 290,230 180,200" fill="#fff8ee" stroke="#b94a2c" stroke-width="1.5"/>
+          <text x="290" y="197" text-anchor="middle" font-size="10" fill="#b94a2c" font-weight="700">Siapa yang akan dengar?</text>
+
+          <!-- Left: Pihak Luar -->
+          <line x1="180" y1="200" x2="90" y2="200" stroke="#8b6f47" stroke-width="1.5" marker-end="url(#arr)"/>
+          <text x="135" y="193" text-anchor="middle" font-size="9" fill="#7a6a58">Pihak Luar</text>
+          <rect x="10" y="180" width="80" height="40" fill="#3a2718" stroke="#3a2718"/>
+          <text x="50" y="202" text-anchor="middle" font-size="10" fill="#ede6d3">Jangan.</text>
+          <text x="50" y="216" text-anchor="middle" font-size="10" fill="#ede6d3">Diam.</text>
+
+          <!-- Right: Sesama Soleh -->
+          <line x1="400" y1="200" x2="490" y2="200" stroke="#8b6f47" stroke-width="1.5" marker-end="url(#arr)"/>
+          <text x="445" y="193" text-anchor="middle" font-size="9" fill="#7a6a58">Sesama Soleh</text>
+
+          <!-- Diamond: Ada agenda? -->
+          <polygon points="510,170 580,200 510,230 440,200" fill="#fff8ee" stroke="#b94a2c" stroke-width="1.5"/>
+          <text x="510" y="197" text-anchor="middle" font-size="9" fill="#b94a2c" font-weight="700">Ada agenda</text>
+          <text x="510" y="210" text-anchor="middle" font-size="9" fill="#b94a2c" font-weight="700">di sebaliknya?</text>
+
+          <!-- Down from Soleh diamond: Tak Pasti -->
+          <line x1="510" y1="230" x2="510" y2="255" stroke="#8b6f47" stroke-width="1.5" marker-end="url(#arr)"/>
+          <text x="522" y="247" font-size="9" fill="#7a6a58">Tak Pasti</text>
+          <rect x="455" y="258" width="110" height="40" fill="#3a2718" stroke="#3a2718"/>
+          <text x="510" y="280" text-anchor="middle" font-size="10" fill="#ede6d3">Tahan. Fikirkan</text>
+          <text x="510" y="294" text-anchor="middle" font-size="10" fill="#ede6d3">semula.</text>
+
+          <!-- Down from main: Timing? -->
+          <line x1="290" y1="230" x2="290" y2="255" stroke="#8b6f47" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <!-- Diamond: Timing -->
+          <polygon points="290,260 380,285 290,310 200,285" fill="#fff8ee" stroke="#b94a2c" stroke-width="1.5"/>
+          <text x="290" y="282" text-anchor="middle" font-size="10" fill="#b94a2c" font-weight="700">Timing sesuai?</text>
+
+          <!-- Left: TAK -->
+          <line x1="200" y1="285" x2="120" y2="285" stroke="#8b6f47" stroke-width="1.5" marker-end="url(#arr)"/>
+          <text x="160" y="278" text-anchor="middle" font-size="9" fill="#7a6a58">TAK</text>
+          <rect x="50" y="265" width="70" height="40" fill="#3a2718" stroke="#3a2718"/>
+          <text x="85" y="287" text-anchor="middle" font-size="10" fill="#ede6d3">Tunggu.</text>
+          <text x="85" y="301" text-anchor="middle" font-size="10" fill="#ede6d3">Sabar.</text>
+
+          <!-- Down: YA -->
+          <line x1="290" y1="310" x2="290" y2="335" stroke="#8b6f47" stroke-width="1.5" marker-end="url(#arr)"/>
+          <text x="302" y="327" font-size="9" fill="#7a6a58">YA</text>
+          <rect x="200" y="338" width="180" height="40" fill="#2d5a3d" stroke="#2d5a3d"/>
+          <text x="290" y="361" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">Boleh share. Bismillah.</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ MORALE CHART ═══════════════════════ -->
+  <div class="section-label">▸ Analisis Indeks Moral Organisasi</div>
+  <div class="overview-box" style="margin-bottom:16px;">
+    <h2>Organisational Morale Index — Q4 2025 hingga Q1 2026</h2>
+    <p>Data dikumpul berdasarkan pemerhatian tingkah laku, sentimen perbualan, kehadiran, dan petunjuk tidak langsung dalam tempoh dua suku tahun. Indeks 100 = semangat penuh. Indeks di bawah 50 = zon merah. Kesemua peristiwa dalam laporan ini berlaku dalam Q1 2026, menyebabkan kejatuhan mendadak yang direkodkan.</p>
+  </div>
+  <div style="background:var(--cream);border:1.5px solid var(--border);padding:24px 20px 20px;margin-bottom:40px;">
+    <!--
+      Pure SVG chart. No external dependencies.
+      Chart area: x 60–740, y 20–260. Total viewBox 800x300.
+      Data: Okt25=82, Nov25=79, Dis25=76, Jan26=62, Feb26=48, Mac26=37, Apr26=29
+      x positions: 6 intervals across 680px → step 113.3px starting at x=60
+      y scale: 0–100 mapped to 260–20 (range 240px) → y = 260 - (val/100)*240
+    -->
+    <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;" font-family="IBM Plex Mono, monospace">
+      <defs>
+        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#b94a2c" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#b94a2c" stop-opacity="0.01"/>
+        </linearGradient>
+        <marker id="tip" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
+          <circle cx="2" cy="2" r="1.5" fill="#8b6f47"/>
+        </marker>
+      </defs>
+
+      <!-- Y-axis grid lines + labels -->
+      <!-- y=100 → 260-(100/100)*240=20 -->
+      <line x1="60" y1="20"  x2="745" y2="20"  stroke="#c0b090" stroke-width="0.5" stroke-dasharray="3,3"/>
+      <text x="50" y="24"  text-anchor="end" font-size="10" fill="#7a6a58">100</text>
+
+      <!-- y=75 → 260-180=80 -->
+      <line x1="60" y1="80"  x2="745" y2="80"  stroke="#c0b090" stroke-width="0.5" stroke-dasharray="3,3"/>
+      <text x="50" y="84"  text-anchor="end" font-size="10" fill="#7a6a58">75</text>
+
+      <!-- y=50 → 260-120=140 — critical line -->
+      <line x1="60" y1="140" x2="745" y2="140" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <text x="50" y="144" text-anchor="end" font-size="10" fill="#b8860b" font-weight="700">⚠50</text>
+
+      <!-- y=25 → 260-60=200 -->
+      <line x1="60" y1="200" x2="745" y2="200" stroke="#c0b090" stroke-width="0.5" stroke-dasharray="3,3"/>
+      <text x="50" y="204" text-anchor="end" font-size="10" fill="#7a6a58">25</text>
+
+      <!-- y=0 → 260 -->
+      <line x1="60" y1="260" x2="745" y2="260" stroke="#c0b090" stroke-width="1"/>
+      <text x="50" y="264" text-anchor="end" font-size="10" fill="#7a6a58">0</text>
+
+      <!-- Y axis line -->
+      <line x1="60" y1="20" x2="60" y2="260" stroke="#c0b090" stroke-width="1"/>
+
+      <!--
+        X positions for 7 points (step = 680/6 = 113.33):
+        0: x=60    Okt 2025  val=82  y=260-196.8=63.2  ≈ 63
+        1: x=173   Nov 2025  val=79  y=260-189.6=70.4  ≈ 70
+        2: x=287   Dis 2025  val=76  y=260-182.4=77.6  ≈ 78
+        3: x=400   Jan 2026  val=62  y=260-148.8=111.2 ≈ 111
+        4: x=513   Feb 2026  val=48  y=260-115.2=144.8 ≈ 145
+        5: x=627   Mac 2026  val=37  y=260-88.8=171.2  ≈ 171
+        6: x=740   Apr 2026  val=29  y=260-69.6=190.4  ≈ 190
+      -->
+
+      <!-- Shaded area fill -->
+      <polygon
+        points="60,63 173,70 287,78 400,111 513,145 627,171 740,190 740,260 60,260"
+        fill="url(#areaGrad)"/>
+
+      <!-- Q1 2026 shaded zone (Jan–Apr) -->
+      <rect x="400" y="20" width="340" height="240" fill="rgba(185,74,44,0.05)"/>
+      <text x="570" y="36" text-anchor="middle" font-size="9" fill="#b94a2c" letter-spacing="2" font-weight="700">Q1 2026</text>
+
+      <!-- Main line -->
+      <polyline
+        points="60,63 173,70 287,78 400,111 513,145 627,171 740,190"
+        fill="none" stroke="#b94a2c" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+      <!-- Data points -->
+      <circle cx="60"  cy="63"  r="5" fill="#b94a2c" stroke="#f7f2e8" stroke-width="2"/>
+      <circle cx="173" cy="70"  r="5" fill="#b94a2c" stroke="#f7f2e8" stroke-width="2"/>
+      <circle cx="287" cy="78"  r="5" fill="#b94a2c" stroke="#f7f2e8" stroke-width="2"/>
+      <circle cx="400" cy="111" r="5" fill="#b94a2c" stroke="#f7f2e8" stroke-width="2"/>
+      <circle cx="513" cy="145" r="5" fill="#b94a2c" stroke="#f7f2e8" stroke-width="2"/>
+      <circle cx="627" cy="171" r="5" fill="#b94a2c" stroke="#f7f2e8" stroke-width="2"/>
+      <circle cx="740" cy="190" r="5" fill="#9b2a1a" stroke="#f7f2e8" stroke-width="2"/>
+
+      <!-- Value labels -->
+      <text x="60"  y="55"  text-anchor="middle" font-size="10" fill="#3a2718" font-weight="700">82</text>
+      <text x="173" y="62"  text-anchor="middle" font-size="10" fill="#3a2718" font-weight="700">79</text>
+      <text x="287" y="70"  text-anchor="middle" font-size="10" fill="#3a2718" font-weight="700">76</text>
+      <text x="400" y="103" text-anchor="middle" font-size="10" fill="#3a2718" font-weight="700">62</text>
+      <text x="513" y="137" text-anchor="middle" font-size="10" fill="#b8860b" font-weight="700">48</text>
+      <text x="627" y="163" text-anchor="middle" font-size="10" fill="#b94a2c" font-weight="700">37</text>
+      <text x="740" y="182" text-anchor="middle" font-size="10" fill="#9b2a1a" font-weight="700">29</text>
+
+      <!-- X axis labels -->
+      <text x="60"  y="278" text-anchor="middle" font-size="9" fill="#7a6a58">Okt 2025</text>
+      <text x="173" y="278" text-anchor="middle" font-size="9" fill="#7a6a58">Nov 2025</text>
+      <text x="287" y="278" text-anchor="middle" font-size="9" fill="#7a6a58">Dis 2025</text>
+      <text x="400" y="278" text-anchor="middle" font-size="9" fill="#7a6a58">Jan 2026</text>
+      <text x="513" y="278" text-anchor="middle" font-size="9" fill="#b8860b">Feb 2026</text>
+      <text x="627" y="278" text-anchor="middle" font-size="9" fill="#b94a2c">Mac 2026</text>
+      <text x="740" y="278" text-anchor="middle" font-size="9" fill="#9b2a1a" font-weight="700">Apr 2026</text>
+    </svg>
+
+    <!-- Legend -->
+    <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:12px 24px;">
+      <div style="display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7a6a58;">
+        <span style="display:inline-block;width:24px;height:3px;background:#b94a2c;border-radius:2px;"></span>Indeks Moral Keseluruhan
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7a6a58;">
+        <span style="display:inline-block;width:24px;height:2px;background:#b8860b;border-top:2px dashed #b8860b;"></span>Paras Kritikal (50)
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7a6a58;">
+        <span style="display:inline-block;width:12px;height:12px;background:rgba(185,74,44,0.08);border:1px solid #b94a2c;"></span>Q1 2026
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ EXEC SUMMARY ═══════════════════════ -->
+  <div class="section-label">▸ Kesimpulan Penganalisis</div>
+  <div class="exec-summary">
+    <div class="exec-summary-label">Soleh Intelligence Group — Penilaian Akhir</div>
+    <h2>Cadangan: Townhall Soleh 3.0</h2>
+    <p>
+      Selepas kajian menyeluruh terhadap keempat-empat kluster intelligence yang terkumpul dalam tempoh ini, <strong>Soleh Intelligence Group</strong> dengan ini secara rasmi mencadangkan bahawa <strong>Townhall Soleh 3.0</strong> adalah perlu dan mendesak.
+    </p>
+    <p>
+      Situasi semasa menunjukkan satu corak yang membimbangkan: organisasi sedang digoncang bukan semata-mata oleh keputusan korporat yang boleh difahami, tetapi oleh apa yang nampaknya seperti agenda peribadi yang diformatkan sebagai strategi. Sama ada ini benar atau tidak, kesan di peringkat pasukan adalah nyata — morale jatuh, resume dikemaskini, dan pasukan yang baik sedang mempertimbangkan untuk keluar.
+    </p>
+    <p>
+      Lebih penting: terdapat pihak-pihak di luar kumpulan Lelaki Soleh yang secara tidak langsung terjejas oleh arus semasa ini. Mereka mungkin bukan ahli kumpulan, tetapi mereka adalah sekutu yang tidak diisytiharkan — dan mereka perlu dilindungi.
+    </p>
+    <p>
+      Townhall 3.0 bukan sekadar perjumpaan sosial. Ia adalah sesi penjajaran semula, di mana setiap ahli perlu memahami keadaan sebenar yang berlaku, mengukuhkan semula protokol komunikasi, dan menentukan bersama bagaimana kumpulan ini hendak berdiri di tengah-tengah ketidakstabilan yang sedang berlaku.
+    </p>
+    <div class="sig">
+      Dikeluarkan oleh: Sekretariat Soleh Intelligence Group<br>
+      Tarikh: April 2025 &nbsp;·&nbsp; Taraf: Sulit — Ahli Sahaja<br>
+      Dokumen ini adalah hak milik eksklusif Lelaki Soleh. Pengedaran tanpa kebenaran adalah pelanggaran covenant kumpulan.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="report-footer">
+    <div class="footer-motto">"Cerita Sini, Habis Sini."</div>
+    <div class="footer-meta">
+      Soleh Intel · Q1 Assessment · Untuk Tatapan Ahli Sahaja<br>
+      Sekretariat Lelaki Soleh · Semua Hak Terpelihara<br>
+      Sekretariat tidak bertanggungjawab atas sebarang drama yang berlaku selepas membaca laporan ini.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
